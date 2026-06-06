@@ -1,6 +1,6 @@
 # ====================================================================================================#
 # ♾️ LOYIHA: GeminGPT - THE ULTIMATE COSMIC INTELLIGENCE (100,000 IQ EDITION)
-# 🎖️ STATUS: ULTRA CLEAR PRO INTERFACE + FIXED LOGIC
+# 🎖️ STATUS: LOGIC SEPARATION FIXED (MUALLIF VA RASM AJRATILDI)
 # 👤 ASOSCHI: KAMRON XUDAYNAZAROV & KGO GROUP GLOBAL SYSTEMS
 # 🛠️ TEXNIK TA'MINOT: GROQ LLAMA-3.3-70B ENGINE & STREAMLIT PRO INTERFACE
 # ====================================================================================================
@@ -59,13 +59,13 @@ st.markdown("""
          display: inline-block;
      }
 
-     /* SIZ XOHLAGAN KO'K RANGLI CHAT INPUT CONTAINER 🔹 */
+     /* CHAT INPUT CONTAINER 🔹 */
      .stChatInputContainer {
-        border: 2px solid #2563eb !important; /* Ko'k ramka */
+        border: 2px solid #2563eb !important; 
         border-radius: 12px !important;
-        background-color: #1e293b !important; /* To'q ko'k-kulrang ichki fon */
+        background-color: #1e293b !important; 
         padding: 5px !important;
-        box-shadow: 0 0 15px rgba(37, 99, 235, 0.3) !important; /* Ko'k neon nuri */
+        box-shadow: 0 0 15px rgba(37, 99, 235, 0.3) !important; 
      }
      
      /* Input ichidagi yozilayotgan matn rangi */
@@ -150,7 +150,7 @@ else:
             st.session_state.logged_in = False
             st.rerun()
             
-    # Asosiy yuqori panel: Chapda ko'k romb matn, o'ngda cheksizlik belgisi
+    # Asosiy yuqori panel
     top_col1, top_col2 = st.columns([9, 1])
     with top_col1:
         st.markdown("<h1 style='color: #2563eb; margin:0; font-weight:bold;'>🔹 gemingpt</h1>", unsafe_allow_html=True)
@@ -187,23 +187,29 @@ else:
         with st.chat_message("user"):
             st.markdown(user_query)
             
-        # Qat'iy tekshirish uchun belgilarni tozalaymiz
+        # Matnni tozalash
         q_low = user_query.lower().strip().replace("?", "").replace("!", "")
          
-        # --- [ANIQ LOGIKA VA JAVOBLAR] ---
-        if any(x in q_low for x in ["rasm", "chiz", "image", "logo", "yarat"]):
+        # --- [TARTIBLANGAN TO'G'RI SHARTLAR NABBATI] ---
+        
+        # 1-Navbat: Salomlashish
+        if q_low == "salom" or q_low == "салом":
+            bot_res = "Salom! Sizga qanday yordam bera olaman?"
+            
+        # 2-Navbat: Muallif haqida (Endi rasm bilan chalkashmaydi 🚀)
+        elif any(x in q_low for x in ["kim yaratgan", "muallif", "egasi", "kim yaratdi", "muallifi kim", "seni kim"]):
+            bot_res = "Meni **KGO Group** va daho asoschi **Kamron Xudaynazarov** yaratgan! ♾️"
+            
+        # 3-Navbat: Haqiqiy rasm so'rovi (Alohida so'zlar bilan)
+        elif any(x in q_low for x in ["rasm chiz", "rasm yarat", "image yarat", "logo yarat", "rasmchiz"]):
             bot_res = (
                  "🎨 **Rasm yaratish uchun quyidagi tizimga kiring:** \n\n"
                  "Bu bizning maxsus **GeminGPT.pro image** modulimiz hisoblanadi. \n"
                  "👉 https://poe.com/chat/81qr77y547hblxp4yk \n\n"
                  "⚠️ *Eslatma:* Kuniga 4 marta bepul rasm yaratish imkoniyati mavjud."
             )
-        elif q_low == "salom" or q_low == "салом":
-            bot_res = "Salom! Sizga qanday yordam bera olaman?"
             
-        elif any(x in q_low for x in ["kim yaratgan", "muallif", "egasi", "kim yaratdi", "muallifi kim"]):
-            bot_res = "Meni **KGO Group** va daho asoschi **Kamron Xudaynazarov** yaratgan! ♾️"
-            
+        # 4-Navbat: Neyrotarmoqning o'zi (Groq LLM)
         else: 
              try:
                  client_groq = Groq(api_key="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")
