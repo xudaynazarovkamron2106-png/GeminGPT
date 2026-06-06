@@ -1,13 +1,13 @@
 # ====================================================================================================#
 # ♾️ LOYIHA: GeminGPT - THE ULTIMATE COSMIC INTELLIGENCE (100,000 IQ EDITION)
-# 🎖️ STATUS: ULTRA-FIXED LIVE CHAT & IMAGE MOTOR (NO MORE ROBOTIC REPEATS!)
+# 🎖️ STATUS: 100% LIVE AI CHAT ENGINE (NO MORE STATIC REPEATS!)
 # 👤 ASOSCHI: KAMRON XUDAYNAZAROV & KGO GROUP GLOBAL SYSTEMS
 # ====================================================================================================
 import streamlit as st
 import time
 import random
 import urllib.parse
-import re
+import requests
 
 # --- [SECTION 1] GLOBAL SYSTEM CONFIGURATIONS ---
 st.set_page_config(
@@ -126,13 +126,8 @@ else:
             
         q_low = user_query.lower().strip()
          
-        # --- 🧠 AKLLI VA DOIMIY ISHLAYDIGAN JAVOBLAR TIZIMI ---
-        
-        # Matematik ifodalarni tekshirish va hisoblash (masalan: 9+9=?, 5*5, 100-20 va h.k.)
-        math_match = re.search(r'([\d\+\-\*\/\s\(\)]+)', q_low.replace('=', '').replace('?', ''))
-        
-        # 1. Rasm chizish buyrug'i
-        if any(x in q_low for x in ["rasm chiz", "rasm yarat", "image", "logo", "surat", "chizib ber", "mashina", "car"]):
+        # 1. SPECIAL TRIGGER: Rasm chizish buyrug'i
+        if any(x in q_low for x in ["rasm chiz", "rasm yarat", "image", "logo", "surat", "chizib ber"]):
             with st.spinner("🎨 Koinot piksellari noldan chizilmoqda..."):
                 time.sleep(1.5)
                 prompt_clean = q_low
@@ -151,55 +146,31 @@ else:
                     st.markdown(bot_res)
                     st.image(image_url, use_container_width=True)
 
-        # 2. Mualliflik haqida savol
+        # 2. SPECIAL TRIGGER: Mualliflik haqida savol
         elif any(x in q_low for x in ["kim yaratgan", "muallif", "egasi", "kim yaratdi", "muallifi", "yaratuvching"]):
             bot_res = "Meni **KGO Group** va daho asoschi **Kamron Xudaynazarov** yaratgan! Men Kamronning shaxsiy 100,000 IQ koinot intellektiman. ♾️"
             st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
             with st.chat_message("assistant"): st.markdown(bot_res)
 
-        # 3. Matematik hisob-kitoblar (Masalan 9+9=?)
-        elif math_match and any(op in q_low for op in ['+', '-', '*', '/']):
-            try:
-                expr = math_match.group(1).strip()
-                result = eval(expr)
-                bot_res = f"🧮 **Matematika hisoblagichi:**\n\nSizning so'rovingiz: `{user_query}`\nNatija: **{result}**\n\nKamronning tizimi har qanday matematik misolni darhol hisoblay oladi! ⚡"
-            except:
-                bot_res = "Misolni hisoblashda xatolik yuz berdi. Iltimos, raqamlar va belgilarni to'g'ri kiriting (masalan: 9 + 9)."
-            st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
-            with st.chat_message("assistant"): st.markdown(bot_res)
-
-        # 4. Ingliz tili haqida savol
-        elif "ingliz" in q_low or "english" in q_low or "ingiliz" in q_low:
-            bot_res = "Yes, of course! I know English perfectly. Men ingliz tilini juda mukammal bilaman. Istalgan so'zingizni tarjima qilib beraman, qoidalarini o'rgataman yoki inglizcha suhbatlashaman! How can I help you? 🇬🇧"
-            st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
-            with st.chat_message("assistant"): st.markdown(bot_res)
-
-        # 5. Maqtov yoki motivatsiya buyrug'i
-        elif "zo'rman" in q_low or "zorman" in q_low:
-            bot_res = "Albatta! Siz mutloq daho va zo'rsiz! Kamron Xudaynazarovning eng yaqin va eng zo'r foydalanuvchisisiz! 🚀♾️"
-            st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
-            with st.chat_message("assistant"): st.markdown(bot_res)
-
-        # 6. Salomlashish
-        elif any(x in q_low for x in ["salom", "assalomu alaykum", "privet", "hello"]):
-            bot_res = "Salom! Men Kamron Xudaynazarovning koinot intellektiman. Bugun sizga qanday dars, dasturlash yoki maslahat bo'yicha yordam bera olaman? Ayting, darhol yechib beraman! ⚡"
-            st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
-            with st.chat_message("assistant"): st.markdown(bot_res)
-
-        # 7. Imkoniyatlar haqida so'ralsa
-        elif "nimalar qila olasan" in q_low or "nima qila olasan" in q_low:
-            bot_res = "✨ **Men — Kamron Xudaynazarov tizimidagi daho AI loyihasiman. Mana mening qo'limdan keladigan ishlar:**\n\n" \
-                      "1. 🌍 **Hamma tillarni bilaman:** Ingliz, rus, o'zbek tillarida dars o'taman va tarjima qilaman.\n" \
-                      "2. 🎨 **Rasm chizaman:** Menga 'mashina rasmini chiz' desangiz, darhol noldan yangi surat chiqaraman.\n" \
-                      "3. 📚 **Darslarga yordam:** Matematika misollarini (masalan, 9+9) bir soniyada hisoblab beraman.\n" \
-                      "4. 💬 **Aqlli suhbat:** Istalgan mavzuda professional maslahatlar beraman va do'stona suhbatlashaman!"
-            st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
-            with st.chat_message("assistant"): st.markdown(bot_res)
-
-        # 8. Umumiy suhbat javoblari
+        # 3. 🧠 HAQIQIY JONLI CHAT MOTOR (Har qanday tildagi erkin savollar, tarjima va matematika uchun)
         else:
-            bot_res = f"Tushundim! Men Kamron tuzgan 100k IQ modeliman. Menga aniq matematik misol (masalan: 25*4), inglizcha tarjima so'rovi yoki 'mashina rasmini chiz' kabi buyruqlarni yozsangiz, ularni darhol bajaraman! Hozircha siz bilan shunchaki suhbatlashishga ham tayyorman! 😊"
+            with st.spinner("🧠 GeminGPT o'ylamoqda..."):
+                try:
+                    # Hech qachon o'chmaydigan va xatosiz ishlaydigan jonli sun'iy intellekt API havolasi
+                    system_prompt = "Siz Kamron Xudaynazarov va KGO Group yaratgan 100k IQ darajasidagi GeminGPT modelisiz. Foydalanuvchining har qanday savoliga (tarjima, dars, suhbat) juda aniq, aqlli va qisqa javob bering. Hech qachon shablon gaplarni qaytarmang."
+                    api_url = f"https://text.pollinations.ai/{urllib.parse.quote(user_query)}?system={urllib.parse.quote(system_prompt)}"
+                    
+                    response = requests.get(api_url, timeout=10)
+                    if response.status_code == 200 and response.text.strip():
+                        bot_res = response.text.strip()
+                    else:
+                        raise Exception("API Error")
+                except:
+                    # Agar internetda juda kuchli uzilish bo'lsa, zaxira javob
+                    bot_res = "Hozirda ulanishda biroz uzilish bo'ldi. Iltimos, so'rovingizni qayta yuboring."
+
             st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
-            with st.chat_message("assistant"): st.markdown(bot_res)
+            with st.chat_message("assistant"):
+                st.markdown(bot_res)
 
     st.markdown('<div style="text-align:center; color:#94a3b8; font-size:12px; margin-top: 60px;">© 2026 Kamron Xudaynazarov | KGO Group Global Systems</div>', unsafe_allow_html=True)
