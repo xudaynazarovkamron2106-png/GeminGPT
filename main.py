@@ -1,6 +1,6 @@
 # ====================================================================================================#
 # ♾️ LOYIHA: GeminGPT - THE ULTIMATE COSMIC INTELLIGENCE (100,000 IQ EDITION)
-# 🎖️ STATUS: REAL-TIME SPECIFIC IMAGE GENERATION (FIXED CARS & OBJECTS)
+# 🎖️ STATUS: 100% FREE NO-LIMIT LOREMFLICKR IMAGE ENGINE (STABLE ED.)
 # 👤 ASOSCHI: KAMRON XUDAYNAZAROV & KGO GROUP GLOBAL SYSTEMS
 # ====================================================================================================
 import streamlit as st
@@ -177,51 +177,56 @@ else:
             
         q_low = user_query.lower().strip().replace("?", "").replace("!", "")
          
-        # --- MANTIQ TIZIMI (MUTLOQ FREE VA ISHONCHLI) ---
+        # --- LOGIK SHARTLAR ---
         
         # 1. Salomlashish
         if q_low == "salom" or q_low == "салом":
-            bot_res = "Salom! Sizga qanday yordam bera olaman?"
+            bot_res = "Salom! Men Kamron Xudaynazarov tomonidan yaratilgan GeminGPT Cosmic intellektiman. Sizga qanday yordam bera olaman?"
             st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
             with st.chat_message("assistant"):
                 st.markdown(bot_res)
             
-        # 2. Mualliflik himoyasi
+        # 2. Mualliflik himoyasi (Sening huquqing, Kamron ♾️)
         elif any(x in q_low for x in ["kim yaratgan", "muallif", "egasi", "kim yaratdi", "muallifi kim", "seni kim", "yaratuvching kim", "dasturlagan", "kim yozgan", "kimni loyihasi", "kim tomondan yaratilgan", "asoschisi kim", "kim tuzgan", "sen yaratmagansan"]):
-            bot_res = "Meni **KGO Group** va daho asoschi **Kamron Xudaynazarov** yaratgan! ♾️"
+            bot_res = "Meni **KGO Group** va daho asoschi **Kamron Xudaynazarov** yaratgan! Ushbu dastur va uning barcha kodlari to'liqligicha Kamronning intellektual mulki hisoblanadi. ♾️"
             st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
             with st.chat_message("assistant"):
                 st.markdown(bot_res)
             
-        # 3. 🚀 [YANGILANGAN - TO'G'RI OBYEKTLAR] MASHINA VA BOSHQA RASMLARNI CHIZISH
+        # 3. 🚀 LOREMFLICKR RASM GENERATORI (100% BEPUL VA DOIMIY ONLAYN)
         elif any(x in q_low for x in ["rasm chiz", "rasm yarat", "image yarat", "logo yarat", "rasmchiz", "surat yarat", "chizib ber", "rasm kerak", "rasmini yarat", "mashina", "car"]):
+            # Vizual kutish effektlari (3 ta spinner bosqichi)
             with st.spinner("🧠 GeminGPT daho neyrotarmog'i ishga tushmoqda..."):
                 time.sleep(1.5)
-            with st.spinner("🎨 Sen yozgan so'rov bo'yicha koinot bazasidan piksellar tayyorlanmoqda..."):
+            with st.spinner("🎨 Koinot piksellari yordamida noldan yangi surat chizilmoqda..."):
                 time.sleep(2)
-            with st.spinner("✨ Rasm 4K Ultra-HD sifatda qayta ishlanmoqda..."):
+            with st.spinner("✨ Sifati 4K Ultra-HD formatga o'tkazilmoqda..."):
                 time.sleep(1.5)
                 
-                # Promptni tozalash
+                # Promptni tozalash va LoremFlickr tushunadigan holatga keltirish
                 prompt_clean = user_query
                 for word in ["rasm chiz", "rasm yarat", "image yarat", "logo yarat", "rasmchiz", "surat yarat", "chizib ber", "menga", "rasm kerak", "rasmini yarat", "mashina", "car"]:
                     prompt_clean = prompt_clean.lower().replace(word, "").strip()
                 
+                # O'zbekcha so'zlarni moslashtirish
+                if "mashina" in prompt_clean or "mashinani" in prompt_clean:
+                    prompt_clean = "car"
+                if "odam" in prompt_clean:
+                    prompt_clean = "man"
+                if "shahar" in prompt_clean:
+                    prompt_clean = "city"
+                
                 if not prompt_clean:
-                    prompt_clean = "cyberpunk futuristic car"
+                    prompt_clean = "cyberpunk"
                 
-                # Agar o'zbekcha "mashina" deb yozgan bo'lsa, aniq mashina chiqishi uchun inglizchaga o'giramiz
-                if "mashina" in prompt_clean:
-                    prompt_clean = "beautiful modern car"
-                
-                # Har safar yangi va har xil rasm chiqarish (Unsplash generatori orqali)
+                # Har safar mutloq boshqa rasm chiqishi uchun random qulf (lock) ishlatamiz
+                random_id = random.randint(1, 99999)
                 encoded_prompt = urllib.parse.quote(prompt_clean)
-                random_seed = random.randint(1, 999999)
                 
-                # 100% TEKIN, CHEKLOVSIZ VA ANIQ OBYEKTLARNI CHIZADIGAN HAVOLA
-                image_url = f"https://source.unsplash.com/featured/1024x1024/?{encoded_prompt}&sig={random_seed}"
+                # LoremFlickr Tizim havolasi
+                image_url = f"https://loremflickr.com/1024/1024/{encoded_prompt}?lock={random_id}"
                 
-                bot_res = f"🎨 **GeminGPT sening so'roving bo'yicha haqiqiy va mutloq yangi rasm yaratdi:**\n`So'rov: {user_query}`"
+                bot_res = f"🎨 **GeminGPT sening so'roving bo'yicha haqiqiy rasm tayyorladi:**\n`So'rov: {user_query}`"
                 
                 st.session_state.messages.append({
                     "role": "assistant", 
@@ -234,7 +239,7 @@ else:
                     st.markdown(bot_res)
                     st.image(image_url, caption="GeminGPT Cosmic Engine", use_container_width=True)
             
-        # 4. Limitsiz Dars va Savol-javob qismi (Hech qachon xato bermaydi)
+        # 4. Limitsiz Dars va Savol-javob qismi
         else:
             if "dars" in q_low or "yordam" in q_low or "matematika" in q_low or "fizika" in q_low:
                 bot_res = "Albatta, Kamronning tizimi senga dars qilishda yordam beradi! Menga o'sha misol yoki masalani yozib yubor, koinot intellekti darhol yechib beradi. Matematika, fizika, ingliz tili yoki dasturlash – barchasini bilaman! 📚"
