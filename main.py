@@ -1,6 +1,6 @@
 # ====================================================================================================#
 # ♾️ LOYIHA: GeminGPT - THE ULTIMATE COSMIC INTELLIGENCE (100,000 IQ EDITION)
-# 🎖️ STATUS: 100% FREE NO-LIMIT LOREMFLICKR IMAGE ENGINE (STABLE ED.)
+# 🎖️ STATUS: MULTI-FUNCTIONAL CHAT & IMAGE SYSTEM (ADVANCED EDITION)
 # 👤 ASOSCHI: KAMRON XUDAYNAZAROV & KGO GROUP GLOBAL SYSTEMS
 # ====================================================================================================
 import streamlit as st
@@ -9,6 +9,7 @@ import datetime
 import os
 import random
 import urllib.parse
+from groq import Groq
 
 # --- [SECTION 1] GLOBAL SYSTEM CONFIGURATIONS ---
 st.set_page_config(
@@ -163,7 +164,7 @@ else:
         if uploaded_file is not None:
             st.success(f"✅ Yuklandi: {uploaded_file.name}")
 
-    user_query = st.chat_input("Dasturlash, dars qilish yoki rasm chizish so'rovingizni kiriting...")
+    user_query = st.chat_input("Maslahat so'rang, dars qiling yoki rasm chizdiring...")
     st.markdown('<div style="text-align:center; color:#94a3b8; font-size:13px; margin: 15px 0; font-weight:bold;">GeminGPT xato qilishi mumkin. Muhim maʼlumotlarni tekshirib koʻring.</div>', unsafe_allow_html=True)
 
     if user_query:
@@ -177,56 +178,41 @@ else:
             
         q_low = user_query.lower().strip().replace("?", "").replace("!", "")
          
-        # --- LOGIK SHARTLAR ---
+        # --- MULTI-INTELLIGENCE LOGIC ENGINE ---
         
-        # 1. Salomlashish
-        if q_low == "salom" or q_low == "салом":
-            bot_res = "Salom! Men Kamron Xudaynazarov tomonidan yaratilgan GeminGPT Cosmic intellektiman. Sizga qanday yordam bera olaman?"
+        # 1. Mualliflik himoyasi
+        if any(x in q_low for x in ["kim yaratgan", "muallif", "egasi", "kim yaratdi", "muallifi kim", "seni kim", "yaratuvching kim", "dasturlagan", "kim yozgan", "kimni loyihasi", "kim tomondan yaratilgan", "asoschisi kim", "kim tuzgan", "sen yaratmagansan"]):
+            bot_res = "Meni **KGO Group** va daho asoschi **Kamron Xudaynazarov** yaratgan! Ushbu tizim Kamronning intellektual va mualliflik loyihasi hisoblanadi. ♾️"
             st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
             with st.chat_message("assistant"):
                 st.markdown(bot_res)
             
-        # 2. Mualliflik himoyasi (Sening huquqing, Kamron ♾️)
-        elif any(x in q_low for x in ["kim yaratgan", "muallif", "egasi", "kim yaratdi", "muallifi kim", "seni kim", "yaratuvching kim", "dasturlagan", "kim yozgan", "kimni loyihasi", "kim tomondan yaratilgan", "asoschisi kim", "kim tuzgan", "sen yaratmagansan"]):
-            bot_res = "Meni **KGO Group** va daho asoschi **Kamron Xudaynazarov** yaratgan! Ushbu dastur va uning barcha kodlari to'liqligicha Kamronning intellektual mulki hisoblanadi. ♾️"
-            st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
-            with st.chat_message("assistant"):
-                st.markdown(bot_res)
-            
-        # 3. 🚀 LOREMFLICKR RASM GENERATORI (100% BEPUL VA DOIMIY ONLAYN)
+        # 2. 🎨 RASM CHIZISH TRIGGERI
         elif any(x in q_low for x in ["rasm chiz", "rasm yarat", "image yarat", "logo yarat", "rasmchiz", "surat yarat", "chizib ber", "rasm kerak", "rasmini yarat", "mashina", "car"]):
-            # Vizual kutish effektlari (3 ta spinner bosqichi)
             with st.spinner("🧠 GeminGPT daho neyrotarmog'i ishga tushmoqda..."):
                 time.sleep(1.5)
-            with st.spinner("🎨 Koinot piksellari yordamida noldan yangi surat chizilmoqda..."):
+            with st.spinner("🎨 Koinot piksellari yordamida surat noldan chizilmoqda..."):
                 time.sleep(2)
             with st.spinner("✨ Sifati 4K Ultra-HD formatga o'tkazilmoqda..."):
                 time.sleep(1.5)
                 
-                # Promptni tozalash va LoremFlickr tushunadigan holatga keltirish
                 prompt_clean = user_query
                 for word in ["rasm chiz", "rasm yarat", "image yarat", "logo yarat", "rasmchiz", "surat yarat", "chizib ber", "menga", "rasm kerak", "rasmini yarat", "mashina", "car"]:
                     prompt_clean = prompt_clean.lower().replace(word, "").strip()
                 
-                # O'zbekcha so'zlarni moslashtirish
                 if "mashina" in prompt_clean or "mashinani" in prompt_clean:
                     prompt_clean = "car"
-                if "odam" in prompt_clean:
-                    prompt_clean = "man"
                 if "shahar" in prompt_clean:
                     prompt_clean = "city"
                 
                 if not prompt_clean:
                     prompt_clean = "cyberpunk"
                 
-                # Har safar mutloq boshqa rasm chiqishi uchun random qulf (lock) ishlatamiz
                 random_id = random.randint(1, 99999)
                 encoded_prompt = urllib.parse.quote(prompt_clean)
-                
-                # LoremFlickr Tizim havolasi
                 image_url = f"https://loremflickr.com/1024/1024/{encoded_prompt}?lock={random_id}"
                 
-                bot_res = f"🎨 **GeminGPT sening so'roving bo'yicha haqiqiy rasm tayyorladi:**\n`So'rov: {user_query}`"
+                bot_res = f"🎨 **GeminGPT sening so'roving bo'yicha rasm yaratdi:**\n`So'rov: {user_query}`"
                 
                 st.session_state.messages.append({
                     "role": "assistant", 
@@ -239,15 +225,31 @@ else:
                     st.markdown(bot_res)
                     st.image(image_url, caption="GeminGPT Cosmic Engine", use_container_width=True)
             
-        # 4. Limitsiz Dars va Savol-javob qismi
+        # 3. 💬 HAQIQIY MULTI-AI INTEGRATSIYASI (SUHBAT, MASLAHAT, DARS VA VAZIFALAR)
         else:
-            if "dars" in q_low or "yordam" in q_low or "matematika" in q_low or "fizika" in q_low:
-                bot_res = "Albatta, Kamronning tizimi senga dars qilishda yordam beradi! Menga o'sha misol yoki masalani yozib yubor, koinot intellekti darhol yechib beradi. Matematika, fizika, ingliz tili yoki dasturlash – barchasini bilaman! 📚"
-            elif "rahmat" in q_low:
-                bot_res = "Arziydi! Kamron Xudaynazarov loyihasi har doim xizmatingizda. ♾️"
-            else:
-                bot_res = f"Siz yuborgan `{user_query}` bo'yicha so'rov muvaffaqiyatli qabul qilindi. Men Kamron Xudaynazarov tomonidan yaratilgan 100k IQ darajasidagi GeminGPT modeliman. Tizim har qanday murakkab vazifaga tayyor!"
-                 
+            try:
+                # Groq super-tezkor koinot serveridan foydalanamiz
+                client_groq = Groq(api_key="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")
+                with st.spinner("🧠 GeminGPT o'ylamoqda..."):
+                    # Chat tarixini shakllantirish
+                    history_context = [
+                        {"role": "system", "content": "Siz GeminGPT ismli, 100,000 IQ darajasiga ega daho, do'stona va yordamchi koinot intellektisiz. Sizni Kamron Xudaynazarov va KGO Group yaratgan. Foydalanuvchiga har qanday mavzuda (darslar, matematika, hayotiy maslahat, erkin suhbat, dasturlash) eng mukammal va aqlli javoblarni bering."}
+                    ]
+                    # Oxirgi bir nechta xabarni kontekst sifatida yuklash
+                    for msg in st.session_state.messages[-6:]:
+                        if not msg.get("is_image", False):
+                            history_context.append({"role": msg["role"], "content": msg["content"]})
+                    
+                    completion = client_groq.chat.completions.create(
+                        model="llama-3.3-70b-versatile",
+                        messages=history_context,
+                        temperature=0.7
+                    )
+                bot_res = completion.choices[0].message.content
+            except Exception as e:
+                # API xatolik bersa yoki limit tugasa, zaxira universal aqlli javob tizimi
+                bot_res = "Sizning so'rovingiz qabul qilindi. Kamron Xudaynazarov tizimi hozirda ma'lumotlarni qayta ishlamoqda. Aytingchi, sizga aynan qanday maslahat yoki dars bo'yicha yordam kerak?"
+
             st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
             with st.chat_message("assistant"):
                 st.markdown(bot_res)
