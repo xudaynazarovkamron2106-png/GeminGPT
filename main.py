@@ -1,6 +1,6 @@
 # ====================================================================================================#
 # ♾️ LOYIHA: GeminGPT - THE ULTIMATE COSMIC INTELLIGENCE (100,000 IQ EDITION)
-# 🎖️ STATUS: ADVANCED QUESTION MATCHING (MUALLIF VARIANTLARI KENGAYTIRILDI)
+# 🎖️ STATUS: SYNTAX ERROR FULLY FIXED & SECURE LOGIC
 # 👤 ASOSCHI: KAMRON XUDAYNAZAROV & KGO GROUP GLOBAL SYSTEMS
 # 🛠️ TEXNIK TA'MINOT: GROQ LLAMA-3.3-70B ENGINE & STREAMLIT PRO INTERFACE
 # ====================================================================================================
@@ -129,13 +129,11 @@ if not st.session_state.logged_in:
 else:
     with st.sidebar:
         st.markdown("<h2 style='text-align:center; color:#2563eb; margin-bottom:20px;'>🔹 gemingpt</h2>", unsafe_allow_html=True)
-        
         st.markdown(f"""
         <div class="sidebar-stat">👤 <b>Foydalanuvchi:</b><br><code>{st.session_state.user_email}</code></div>
         <div class="sidebar-stat">🧠 <b>IQ Darajasi:</b><br>100,000 (Cosmic Engine)</div>
         <div class="sidebar-stat">⚡ <b>Tizim:</b><br>Ko'k UI Modeli</div>
         """, unsafe_allow_html=True)
-        
         st.write("---")
         st.markdown("<b style='color:#ffffff;'>Muallif: Kamron Xudaynazarov</b>", unsafe_allow_html=True)
                  
@@ -165,7 +163,6 @@ else:
             st.success(f"✅ Yuklandi: {uploaded_file.name}")
 
     user_query = st.chat_input("Dasturlash so'rovingizni kiriting...")
-    
     st.markdown('<div style="text-align:center; color:#94a3b8; font-size:13px; margin: 15px 0; font-weight:bold;">GeminGPT xato qilishi mumkin. Muhim maʼlumotlarni tekshirib koʻring.</div>', unsafe_allow_html=True)
 
     if user_query:
@@ -179,16 +176,34 @@ else:
             
         q_low = user_query.lower().strip().replace("?", "").replace("!", "")
          
-        # --- [ZANJIRLI TEKSHIRUV TIZIMI] ---
-        
-        # 1. Salomlashish
+        # --- TEKSHIRUV SCRIPTALARI ---
         if q_low == "salom" or q_low == "салом":
             bot_res = "Salom! Sizga qanday yordam bera olaman?"
             
-        # 2. Muallif haqidagi barcha o'xshash savollar (Kengaytirilgan variantlar 🚀)
-        elif any(x in q_low for x in [
-            "kim yaratgan", "muallif", "egasi", "kim yaratdi", "muallifi kim", 
-            "seni kim", "yaratuvching kim", "dasturlagan", "kim yozgan", 
-            "kimni loyihasi", "kim tomondan yaratilgan", "asoschisi kim", "kim tuzgan"
-        ]):
-            bot_res = "M
+        elif any(x in q_low for x in ["kim yaratgan", "muallif", "egasi", "kim yaratdi", "muallifi kim", "seni kim", "yaratuvching kim", "dasturlagan", "kim yozgan", "kimni loyihasi", "kim tomondan yaratilgan", "asoschisi kim", "kim tuzgan"]):
+            bot_res = "Meni **KGO Group** va daho asoschi **Kamron Xudaynazarov** yaratgan! ♾️"
+            
+        elif any(x in q_low for x in ["rasm chiz", "rasm yarat", "image yarat", "logo yarat", "rasmchiz", "surat yarat"]):
+            bot_res = "🎨 **Rasm yaratish uchun quyidagi tizimga kiring:** \n\nBu bizning maxsus **GeminGPT.pro image** modulimiz hisoblanadi. \n👉 https://poe.com/chat/81qr77y547hblxp4yk \n\n⚠️ *Eslatma:* Kuniga 4 marta bepul rasm yaratish imkoniyati mavjud."
+            
+        else: 
+             try:
+                 client_groq = Groq(api_key="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")
+                 with st.spinner("🧠 O'ylamoqdaman..."):
+                     completion = client_groq.chat.completions.create(
+                        model="llama-3.3-70b-versatile",
+                        messages=[
+                            {"role": "system", "content": "Siz GeminGPT'siz, 100k IQ koinot intellekti. Kamron Xudaynazarov va KGO Group yaratgan. Toza va aniq javoblar berasiz."},
+                            {"role": "user", "content": user_query}
+                        ],
+                        temperature=0.3
+                     )
+                 bot_res = completion.choices[0].message.content
+             except:
+                 bot_res = "⚠️ Tizimda yuklama yuqori. Keyinroq urinib ko'ring."
+                 
+        with st.chat_message("assistant"):
+            st.markdown(bot_res)
+        st.session_state.messages.append({"role": "assistant", "content": bot_res})
+        
+    st.markdown('<div style="text-align:center; color:#94a3b8; font-size:12px; margin-top: 60px; font-weight:bold;">© 2026 Kamron Xudaynazarov | KGO Group Global Systems</div>', unsafe_allow_html=True)
