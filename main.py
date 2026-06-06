@@ -1,6 +1,6 @@
 # ====================================================================================================#
 # ♾️ LOYIHA: GeminGPT - THE ULTIMATE COSMIC INTELLIGENCE (100,000 IQ EDITION)
-# 🎖️ STATUS: SYNTAX ERROR FULLY FIXED & SECURE LOGIC
+# 🎖️ STATUS: REAL IMAGE GENERATION ENGINE INTEGRATED (POLLINATIONS AI)
 # 👤 ASOSCHI: KAMRON XUDAYNAZAROV & KGO GROUP GLOBAL SYSTEMS
 # 🛠️ TEXNIK TA'MINOT: GROQ LLAMA-3.3-70B ENGINE & STREAMLIT PRO INTERFACE
 # ====================================================================================================
@@ -10,6 +10,7 @@ import time
 import datetime
 import os
 import random
+import urllib.parse  # Matnlarni rasm linkiga to'g'ri o'tkazish uchun
 
 # --- [SECTION 1] GLOBAL SYSTEM CONFIGURATIONS ---
 st.set_page_config(
@@ -149,9 +150,14 @@ else:
     
     st.markdown("---")
 
+    # Xabarlarni ko'rsatish paneli (Rasm bo'lsa rasmni, matn bo'lsa matnni ko'rsatadi)
     for message in st.session_state.messages: 
          with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+            if message.get("is_image", False):
+                st.markdown(message["content"])
+                st.image(message["image_url"], caption="GeminGPT Cosmic Engine", use_container_width=True)
+            else:
+                st.markdown(message["content"])
             
     with st.expander("➕ FAYL VA SURATLARNI YUKLASH PANELI", expanded=False):
         uploaded_file = st.file_uploader(
@@ -162,30 +168,69 @@ else:
         if uploaded_file is not None:
             st.success(f"✅ Yuklandi: {uploaded_file.name}")
 
-    user_query = st.chat_input("Dasturlash so'rovingizni kiriting...")
+    user_query = st.chat_input("Dasturlash yoki rasm chizish so'rovingizni kiriting...")
     st.markdown('<div style="text-align:center; color:#94a3b8; font-size:13px; margin: 15px 0; font-weight:bold;">GeminGPT xato qilishi mumkin. Muhim maʼlumotlarni tekshirib koʻring.</div>', unsafe_allow_html=True)
 
     if user_query:
         if uploaded_file is not None:
             user_query = f"[Yuklangan fayl: {uploaded_file.name}]\n\n" + user_query
             
-        st.session_state.messages.append({"role": "user", "content": user_query})
+        st.session_state.messages.append({"role": "user", "content": user_query, "is_image": False})
          
         with st.chat_message("user"):
             st.markdown(user_query)
             
         q_low = user_query.lower().strip().replace("?", "").replace("!", "")
          
-        # --- TEKSHIRUV SCRIPTALARI ---
+        # --- [MUTLOQ TO'G'RI RUNTIME MANTIQ] ---
+        
+        # 1. Salomlashish
         if q_low == "salom" or q_low == "салом":
             bot_res = "Salom! Sizga qanday yordam bera olaman?"
+            st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
+            with st.chat_message("assistant"):
+                st.markdown(bot_res)
             
+        # 2. Muallif haqidagi savollar
         elif any(x in q_low for x in ["kim yaratgan", "muallif", "egasi", "kim yaratdi", "muallifi kim", "seni kim", "yaratuvching kim", "dasturlagan", "kim yozgan", "kimni loyihasi", "kim tomondan yaratilgan", "asoschisi kim", "kim tuzgan"]):
             bot_res = "Meni **KGO Group** va daho asoschi **Kamron Xudaynazarov** yaratgan! ♾️"
+            st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
+            with st.chat_message("assistant"):
+                st.markdown(bot_res)
             
-        elif any(x in q_low for x in ["rasm chiz", "rasm yarat", "image yarat", "logo yarat", "rasmchiz", "surat yarat"]):
-            bot_res = "🎨 **Rasm yaratish uchun quyidagi tizimga kiring:** \n\nBu bizning maxsus **GeminGPT.pro image** modulimiz hisoblanadi. \n👉 https://poe.com/chat/81qr77y547hblxp4yk \n\n⚠️ *Eslatma:* Kuniga 4 marta bepul rasm yaratish imkoniyati mavjud."
+        # 3. 🚀 HAQIQIY RASM YARATISH MOTORINI ISHGA TUSHIRISH (XATOSIZ!)
+        elif any(x in q_low for x in ["rasm chiz", "rasm yarat", "image yarat", "logo yarat", "rasmchiz", "surat yarat", "chizib ber", "rasm kerak"]):
+            with st.spinner("🎨 Koinot neyrotarmog'i rasm chizmoqda..."):
+                # Foydalanuvchi yozgan promptni tozalab olamiz
+                prompt_clean = user_query
+                for word in ["rasm chiz", "rasm yarat", "image yarat", "logo yarat", "rasmchiz", "surat yarat", "chizib ber", "menga", "rasm kerak"]:
+                    prompt_clean = prompt_clean.lower().replace(word, "").strip()
+                
+                if not prompt_clean:
+                    prompt_clean = "cosmic intelligence cyber core tech neon"
+                
+                # Ingiz tiliga o'tkazilsa neyrotarmoq dahshat chizadi, shuning uchun default inglizcha teglarni ham miks qilamiz
+                encoded_prompt = urllib.parse.quote(prompt_clean)
+                seed = random.randint(1, 999999)
+                
+                # Pollinations AI Ultra-HD 4K Rasm Generatori Linki
+                image_url = f"https://image.pollinations.ai/p/{encoded_prompt}?width=1024&height=1024&seed={seed}&nofeed=true"
+                
+                bot_res = f"🎨 **GeminGPT Cosmic Engine sening so'roving bo'yicha rasm chizdi:**\n`So'rov: {prompt_clean}`"
+                
+                # Tarixga rasm sifatida yozib qo'yamiz
+                st.session_state.messages.append({
+                    "role": "assistant", 
+                    "content": bot_res, 
+                    "is_image": True,
+                    "image_url": image_url
+                })
+                
+                with st.chat_message("assistant"):
+                    st.markdown(bot_res)
+                    st.image(image_url, caption="GeminGPT Cosmic Engine", use_container_width=True)
             
+        # 4. Oddiy matnli AI so'rovlari (Groq LLM)
         else: 
              try:
                  client_groq = Groq(api_key="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")
@@ -202,8 +247,8 @@ else:
              except:
                  bot_res = "⚠️ Tizimda yuklama yuqori. Keyinroq urinib ko'ring."
                  
-        with st.chat_message("assistant"):
-            st.markdown(bot_res)
-        st.session_state.messages.append({"role": "assistant", "content": bot_res})
+             st.session_state.messages.append({"role": "assistant", "content": bot_res, "is_image": False})
+             with st.chat_message("assistant"):
+                 st.markdown(bot_res)
         
     st.markdown('<div style="text-align:center; color:#94a3b8; font-size:12px; margin-top: 60px; font-weight:bold;">© 2026 Kamron Xudaynazarov | KGO Group Global Systems</div>', unsafe_allow_html=True)
