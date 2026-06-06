@@ -1,6 +1,6 @@
 # ====================================================================================================#
 # ♾️ LOYIHA: GeminGPT - THE ULTIMATE COSMIC INTELLIGENCE (100,000 IQ EDITION)
-# 🎖️ STATUS: ULTRA CLEAN PRO INTERFACE + FILE UPLOADER
+# 🎖️ STATUS: ULTRA CLEAR PRO INTERFACE + FIXED LOGIC
 # 👤 ASOSCHI: KAMRON XUDAYNAZAROV & KGO GROUP GLOBAL SYSTEMS
 # 🛠️ TEXNIK TA'MINOT: GROQ LLAMA-3.3-70B ENGINE & STREAMLIT PRO INTERFACE
 # ====================================================================================================
@@ -19,24 +19,33 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- [SECTION 2] CLEAN GLASSMORPHISM & DARK CSS ---
+# --- [SECTION 2] HIGH VISIBILITY BLUE & DARK CSS ---
 st.markdown("""
 <style>
+     /* Toza to'q fon, yorqin oq matnlar bilan (O'qishga juda oson) */
      .stApp {
          background-color: #0b0f19;
-         color: #f1f5f9;
+         color: #ffffff !important;
          font-family: 'Inter', sans-serif;
      }
      
-     .clean-container {
-         background: rgba(255, 255, 255, 0.03);
-         border: 1px solid rgba(255, 255, 255, 0.08);
-         padding: 25px;
-         border-radius: 16px;
-         backdrop-filter: blur(10px);
-         margin-bottom: 20px;
+     /* Sidebar ichidagi yozuvlarni qalin va oq qilish */
+     [data-testid="stSidebar"] {
+         background-color: #0f172a !important;
+         color: #ffffff !important;
+     }
+     [data-testid="stSidebar"] p, [data-testid="stSidebar"] b, [data-testid="stSidebar"] span {
+         color: #ffffff !important;
+     }
+     
+     /* Chat xabarlari matnini yorqin qilish */
+     .stChatMessage p {
+         color: #ffffff !important;
+         font-size: 16px !important;
+         font-weight: 500 !important;
      }
 
+     /* Silliq aylanuvchi cheksizlik belgisi */
      @keyframes smooth-glow {
          0% { filter: drop-shadow(0 0 5px rgba(0, 212, 255, 0.5)); transform: rotate(0deg); }
          50% { filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.8)); transform: rotate(5deg); }
@@ -50,19 +59,28 @@ st.markdown("""
          display: inline-block;
      }
 
+     /* SIZ XOHLAGAN KO'K RANGLI CHAT INPUT CONTAINER 🔹 */
      .stChatInputContainer {
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border: 2px solid #2563eb !important; /* Ko'k ramka */
         border-radius: 12px !important;
-        background-color: #111827 !important;
+        background-color: #1e293b !important; /* To'q ko'k-kulrang ichki fon */
         padding: 5px !important;
+        box-shadow: 0 0 15px rgba(37, 99, 235, 0.3) !important; /* Ko'k neon nuri */
+     }
+     
+     /* Input ichidagi yozilayotgan matn rangi */
+     .stChatInputContainer textarea {
+        color: #ffffff !important;
+        font-size: 16px !important;
      }
      
      .sidebar-stat {
-         padding: 10px 15px;
-         background: rgba(255, 255, 255, 0.05);
+         padding: 12px 15px;
+         background: rgba(255, 255, 255, 0.08);
          border-radius: 8px;
          margin-bottom: 10px;
-         border-left: 3px solid #38bdf8;
+         border-left: 4px solid #2563eb;
+         color: #ffffff !important;
      }
      
      .google-card-ultra {
@@ -115,25 +133,27 @@ if not st.session_state.logged_in:
 
 # --- [SECTION 5] MAIN DASHBOARD ---
 else:
+    # Sidebar dizayni
     with st.sidebar:
-        st.markdown("<h2 style='text-align:center; color:#38bdf8; margin-bottom:20px;'>🔹 gemingpt</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:center; color:#2563eb; margin-bottom:20px;'>🔹 gemingpt</h2>", unsafe_allow_html=True)
         
         st.markdown(f"""
         <div class="sidebar-stat">👤 <b>Foydalanuvchi:</b><br><code>{st.session_state.user_email}</code></div>
         <div class="sidebar-stat">🧠 <b>IQ Darajasi:</b><br>100,000 (Cosmic Engine)</div>
-        <div class="sidebar-stat">⚡ <b>Tizim:</b><br>Toza UI / Minimalist</div>
+        <div class="sidebar-stat">⚡ <b>Tizim:</b><br>Ko'k UI Modeli</div>
         """, unsafe_allow_html=True)
         
         st.write("---")
-        st.caption("Muallif: Kamron Xudaynazarov")
+        st.markdown("<b style='color:#ffffff;'>Muallif: Kamron Xudaynazarov</b>", unsafe_allow_html=True)
                  
         if st.button("🚪 Chiqish", use_container_width=True):
             st.session_state.logged_in = False
             st.rerun()
             
+    # Asosiy yuqori panel: Chapda ko'k romb matn, o'ngda cheksizlik belgisi
     top_col1, top_col2 = st.columns([9, 1])
     with top_col1:
-        st.markdown("<h1 style='color: #38bdf8; margin:0;'>🔹 gemingpt</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='color: #2563eb; margin:0; font-weight:bold;'>🔹 gemingpt</h1>", unsafe_allow_html=True)
     with top_col2:
         st.markdown("<div style='text-align: right;'><span class='infinity-btn'>♾️</span></div>", unsafe_allow_html=True)
     
@@ -144,22 +164,21 @@ else:
          with st.chat_message(message["role"]):
             st.markdown(message["content"])
             
-    # --- YANGI FUNKSIYA: Chat inputning naqd tepasida ochiladigan "+" moduli ---
+    # Fayl yuklash expanderi
     with st.expander("➕ FAYL VA SURATLARNI YUKLASH PANELI", expanded=False):
         uploaded_file = st.file_uploader(
-            "Fayl yoki Suratni tanlang (Tizimga yuklash uchun)", 
+            "Fayl yoki Suratni tanlang", 
             type=["png", "jpg", "jpeg", "pdf", "txt", "py", "docx"],
             label_visibility="visible"
         )
         if uploaded_file is not None:
-            st.success(f"✅ Yuklandi: {uploaded_file.name} — GeminGPT faylni tahlil qilishga tayyor!")
+            st.success(f"✅ Yuklandi: {uploaded_file.name}")
 
     user_query = st.chat_input("Dasturlash so'rovingizni kiriting...")
     
-    st.markdown('<div style="text-align:center; color:#64748b; font-size:13px; margin: 15px 0;">GeminGPT xato qilishi mumkin. Muhim maʼlumotlarni tekshirib koʻring.</div>', unsafe_allow_html=True)
+    st.markdown('<div style="text-align:center; color:#94a3b8; font-size:13px; margin: 15px 0; font-weight:bold;">GeminGPT xato qilishi mumkin. Muhim maʼlumotlarni tekshirib koʻring.</div>', unsafe_allow_html=True)
 
     if user_query:
-        # Agar foydalanuvchi fayl yuklagan bo'lsa, uni matnga qo'shib yuboramiz
         if uploaded_file is not None:
             user_query = f"[Yuklangan fayl: {uploaded_file.name}]\n\n" + user_query
             
@@ -167,8 +186,11 @@ else:
          
         with st.chat_message("user"):
             st.markdown(user_query)
-        q_low = user_query.lower().strip()
+            
+        # Qat'iy tekshirish uchun belgilarni tozalaymiz
+        q_low = user_query.lower().strip().replace("?", "").replace("!", "")
          
+        # --- [ANIQ LOGIKA VA JAVOBLAR] ---
         if any(x in q_low for x in ["rasm", "chiz", "image", "logo", "yarat"]):
             bot_res = (
                  "🎨 **Rasm yaratish uchun quyidagi tizimga kiring:** \n\n"
@@ -176,10 +198,12 @@ else:
                  "👉 https://poe.com/chat/81qr77y547hblxp4yk \n\n"
                  "⚠️ *Eslatma:* Kuniga 4 marta bepul rasm yaratish imkoniyati mavjud."
             )
-        elif q_low == "salom":
-            bot_res = "Salom! Men 100,000 IQ darajasidagi GeminGPT'man. Qanday yordam bera olaman?"
-        elif any(x in q_low for x in ["kim yaratgan", "muallif", "egasi"]):
+        elif q_low == "salom" or q_low == "салом":
+            bot_res = "Salom! Sizga qanday yordam bera olaman?"
+            
+        elif any(x in q_low for x in ["kim yaratgan", "muallif", "egasi", "kim yaratdi", "muallifi kim"]):
             bot_res = "Meni **KGO Group** va daho asoschi **Kamron Xudaynazarov** yaratgan! ♾️"
+            
         else: 
              try:
                  client_groq = Groq(api_key="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")
@@ -200,4 +224,4 @@ else:
             st.markdown(bot_res)
         st.session_state.messages.append({"role": "assistant", "content": bot_res})
         
-    st.markdown(f'<div style="text-align:center; color:#475569; font-size:12px; margin-top: 60px;">© 2026 Kamron Xudaynazarov | KGO Group Global Systems</div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="text-align:center; color:#94a3b8; font-size:12px; margin-top: 60px; font-weight:bold;">© 2026 Kamron Xudaynazarov | KGO Group Global Systems</div>', unsafe_allow_html=True)
