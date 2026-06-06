@@ -1,6 +1,6 @@
 # ====================================================================================================#
 # ♾️ LOYIHA: GeminGPT - THE ULTIMATE COSMIC INTELLIGENCE (100,000 IQ EDITION)
-# 🎖️ STATUS: LOGIC SEPARATION FIXED (MUALLIF VA RASM AJRATILDI)
+# 🎖️ STATUS: ADVANCED QUESTION MATCHING (MUALLIF VARIANTLARI KENGAYTIRILDI)
 # 👤 ASOSCHI: KAMRON XUDAYNAZAROV & KGO GROUP GLOBAL SYSTEMS
 # 🛠️ TEXNIK TA'MINOT: GROQ LLAMA-3.3-70B ENGINE & STREAMLIT PRO INTERFACE
 # ====================================================================================================
@@ -22,14 +22,12 @@ st.set_page_config(
 # --- [SECTION 2] HIGH VISIBILITY BLUE & DARK CSS ---
 st.markdown("""
 <style>
-     /* Toza to'q fon, yorqin oq matnlar bilan (O'qishga juda oson) */
      .stApp {
          background-color: #0b0f19;
          color: #ffffff !important;
          font-family: 'Inter', sans-serif;
      }
      
-     /* Sidebar ichidagi yozuvlarni qalin va oq qilish */
      [data-testid="stSidebar"] {
          background-color: #0f172a !important;
          color: #ffffff !important;
@@ -38,14 +36,12 @@ st.markdown("""
          color: #ffffff !important;
      }
      
-     /* Chat xabarlari matnini yorqin qilish */
      .stChatMessage p {
          color: #ffffff !important;
          font-size: 16px !important;
          font-weight: 500 !important;
      }
 
-     /* Silliq aylanuvchi cheksizlik belgisi */
      @keyframes smooth-glow {
          0% { filter: drop-shadow(0 0 5px rgba(0, 212, 255, 0.5)); transform: rotate(0deg); }
          50% { filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.8)); transform: rotate(5deg); }
@@ -59,7 +55,6 @@ st.markdown("""
          display: inline-block;
      }
 
-     /* CHAT INPUT CONTAINER 🔹 */
      .stChatInputContainer {
         border: 2px solid #2563eb !important; 
         border-radius: 12px !important;
@@ -68,7 +63,6 @@ st.markdown("""
         box-shadow: 0 0 15px rgba(37, 99, 235, 0.3) !important; 
      }
      
-     /* Input ichidagi yozilayotgan matn rangi */
      .stChatInputContainer textarea {
         color: #ffffff !important;
         font-size: 16px !important;
@@ -133,7 +127,6 @@ if not st.session_state.logged_in:
 
 # --- [SECTION 5] MAIN DASHBOARD ---
 else:
-    # Sidebar dizayni
     with st.sidebar:
         st.markdown("<h2 style='text-align:center; color:#2563eb; margin-bottom:20px;'>🔹 gemingpt</h2>", unsafe_allow_html=True)
         
@@ -150,7 +143,6 @@ else:
             st.session_state.logged_in = False
             st.rerun()
             
-    # Asosiy yuqori panel
     top_col1, top_col2 = st.columns([9, 1])
     with top_col1:
         st.markdown("<h1 style='color: #2563eb; margin:0; font-weight:bold;'>🔹 gemingpt</h1>", unsafe_allow_html=True)
@@ -159,12 +151,10 @@ else:
     
     st.markdown("---")
 
-    # Chat xabarlari maydoni
     for message in st.session_state.messages: 
          with st.chat_message(message["role"]):
             st.markdown(message["content"])
             
-    # Fayl yuklash expanderi
     with st.expander("➕ FAYL VA SURATLARNI YUKLASH PANELI", expanded=False):
         uploaded_file = st.file_uploader(
             "Fayl yoki Suratni tanlang", 
@@ -187,47 +177,18 @@ else:
         with st.chat_message("user"):
             st.markdown(user_query)
             
-        # Matnni tozalash
         q_low = user_query.lower().strip().replace("?", "").replace("!", "")
          
-        # --- [TARTIBLANGAN TO'G'RI SHARTLAR NABBATI] ---
+        # --- [ZANJIRLI TEKSHIRUV TIZIMI] ---
         
-        # 1-Navbat: Salomlashish
+        # 1. Salomlashish
         if q_low == "salom" or q_low == "салом":
             bot_res = "Salom! Sizga qanday yordam bera olaman?"
             
-        # 2-Navbat: Muallif haqida (Endi rasm bilan chalkashmaydi 🚀)
-        elif any(x in q_low for x in ["kim yaratgan", "muallif", "egasi", "kim yaratdi", "muallifi kim", "seni kim"]):
-            bot_res = "Meni **KGO Group** va daho asoschi **Kamron Xudaynazarov** yaratgan! ♾️"
-            
-        # 3-Navbat: Haqiqiy rasm so'rovi (Alohida so'zlar bilan)
-        elif any(x in q_low for x in ["rasm chiz", "rasm yarat", "image yarat", "logo yarat", "rasmchiz"]):
-            bot_res = (
-                 "🎨 **Rasm yaratish uchun quyidagi tizimga kiring:** \n\n"
-                 "Bu bizning maxsus **GeminGPT.pro image** modulimiz hisoblanadi. \n"
-                 "👉 https://poe.com/chat/81qr77y547hblxp4yk \n\n"
-                 "⚠️ *Eslatma:* Kuniga 4 marta bepul rasm yaratish imkoniyati mavjud."
-            )
-            
-        # 4-Navbat: Neyrotarmoqning o'zi (Groq LLM)
-        else: 
-             try:
-                 client_groq = Groq(api_key="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")
-                 with st.spinner("🧠 O'ylamoqdaman..."):
-                     completion = client_groq.chat.completions.create(
-                        model="llama-3.3-70b-versatile",
-                        messages=[
-                            {"role": "system", "content": "Siz GeminGPT'siz, 100k IQ koinot intellekti. Kamron Xudaynazarov va KGO Group yaratgan. Toza va aniq javoblar berasiz."},
-                            {"role": "user", "content": user_query}
-                        ],
-                        temperature=0.3
-                     )
-                 bot_res = completion.choices[0].message.content
-             except:
-                 bot_res = "⚠️ Tizimda yuklama yuqori. Keyinroq urinib ko'ring."
-                 
-        with st.chat_message("assistant"):
-            st.markdown(bot_res)
-        st.session_state.messages.append({"role": "assistant", "content": bot_res})
-        
-    st.markdown(f'<div style="text-align:center; color:#94a3b8; font-size:12px; margin-top: 60px; font-weight:bold;">© 2026 Kamron Xudaynazarov | KGO Group Global Systems</div>', unsafe_allow_html=True)
+        # 2. Muallif haqidagi barcha o'xshash savollar (Kengaytirilgan variantlar 🚀)
+        elif any(x in q_low for x in [
+            "kim yaratgan", "muallif", "egasi", "kim yaratdi", "muallifi kim", 
+            "seni kim", "yaratuvching kim", "dasturlagan", "kim yozgan", 
+            "kimni loyihasi", "kim tomondan yaratilgan", "asoschisi kim", "kim tuzgan"
+        ]):
+            bot_res = "M
